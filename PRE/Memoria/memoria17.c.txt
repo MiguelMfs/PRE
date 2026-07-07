@@ -1,0 +1,118 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+typedef struct
+{
+    char nome[50];
+    float x;
+    float y;
+} Cidade;
+
+// Função para calcular distância entre duas cidades
+float calcularDistancia(Cidade a, Cidade b)
+{
+    return sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2));
+}
+
+int main()
+{
+    Cidade *cidades;
+    float **distancias;
+    int n;
+    int i, j;
+    int c1, c2;
+
+    printf("Digite a quantidade de cidades: ");
+    scanf("%d", &n);
+
+    // Alocação dinâmica do vetor de cidades
+    cidades = (Cidade *) malloc(n * sizeof(Cidade));
+
+    if(cidades == NULL)
+    {
+        printf("Erro ao alocar memoria.\n");
+        return 1;
+    }
+
+    // Entrada das cidades
+    for(i = 0; i < n; i++)
+    {
+        printf("\nCidade %d\n", i);
+
+        printf("Nome: ");
+        scanf(" %[^\n]", cidades[i].nome);
+
+        printf("Coordenada X: ");
+        scanf("%f", &cidades[i].x);
+
+        printf("Coordenada Y: ");
+        scanf("%f", &cidades[i].y);
+    }
+
+
+    // Alocação da matriz de distâncias
+    distancias = (float **) malloc(n * sizeof(float *));
+
+    for(i = 0; i < n; i++)
+    {
+        distancias[i] = (float *) malloc(n * sizeof(float));
+    }
+
+
+    // Calcula as distâncias
+    for(i = 0; i < n; i++)
+    {
+        for(j = 0; j < n; j++)
+        {
+            distancias[i][j] = calcularDistancia(cidades[i], cidades[j]);
+        }
+    }
+
+
+    // Exibe a matriz de distâncias
+    printf("\nMatriz de distancias:\n");
+
+    for(i = 0; i < n; i++)
+    {
+        for(j = 0; j < n; j++)
+        {
+            printf("%.2f\t", distancias[i][j]);
+        }
+
+        printf("\n");
+    }
+
+
+    // Consulta de distância entre cidades
+    printf("\nDigite o numero de duas cidades para consultar a distancia:\n");
+    printf("Cidade 1 (0 a %d): ", n - 1);
+    scanf("%d", &c1);
+
+    printf("Cidade 2 (0 a %d): ", n - 1);
+    scanf("%d", &c2);
+
+    if(c1 >= 0 && c1 < n && c2 >= 0 && c2 < n)
+    {
+        printf("\nDistancia entre %s e %s: %.2f\n",
+               cidades[c1].nome,
+               cidades[c2].nome,
+               distancias[c1][c2]);
+    }
+    else
+    {
+        printf("Cidade invalida.\n");
+    }
+
+
+    // Liberação da memória
+    for(i = 0; i < n; i++)
+    {
+        free(distancias[i]);
+    }
+
+    free(distancias);
+    free(cidades);
+
+    return 0;
+}

@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+// Função para preencher os 10 primeiros elementos com valores aleatórios
+void preencherAleatorio(double *vetor)
+{
+    int i;
+
+    for(i = 0; i < 10; i++)
+    {
+        vetor[i] = (double)(rand() % 101);
+    }
+}
+
+int main()
+{
+    double *vetor;
+    int tamanho;
+    int i;
+
+    printf("Digite quantos valores deseja armazenar: ");
+    scanf("%d", &tamanho);
+
+    // Garante que o vetor tenha pelo menos 10 elementos
+    if(tamanho < 10)
+    {
+        tamanho = 10;
+        printf("Tamanho ajustado para 10 elementos.\n");
+    }
+
+    // Alocação dinâmica usando malloc
+    vetor = (double *) malloc(tamanho * sizeof(double));
+
+    if(vetor == NULL)
+    {
+        printf("Erro ao alocar memoria.\n");
+        return 1;
+    }
+
+    // Inicializa o gerador de números aleatórios
+    srand(time(NULL));
+
+    preencherAleatorio(vetor);
+
+    printf("\nValores armazenados nos 10 primeiros elementos:\n");
+
+    for(i = 0; i < 10; i++)
+    {
+        printf("%.2lf\n", vetor[i]);
+    }
+
+    // Libera memória
+    free(vetor);
+
+    return 0;
+}

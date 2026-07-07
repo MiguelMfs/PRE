@@ -1,0 +1,50 @@
+#include <stdio.h>
+
+typedef struct
+{
+    char nome[100];
+    int matricula;
+    char curso[100];
+} Aluno;
+
+// Função para imprimir os dados dos alunos
+void imprimirAlunos(Aluno alunos[], int quantidade)
+{
+    int i;
+
+    printf("\n===== DADOS DOS ALUNOS =====\n");
+
+    for (i = 0; i < quantidade; i++)
+    {
+        printf("\nAluno %d\n", i + 1);
+        printf("Nome: %s", alunos[i].nome);
+        printf("Matricula: %d\n", alunos[i].matricula);
+        printf("Curso: %s", alunos[i].curso);
+    }
+}
+
+int main()
+{
+    Aluno alunos[5];
+    int i;
+
+    for (i = 0; i < 5; i++)
+    {
+        printf("\nAluno %d\n", i + 1);
+
+        printf("Nome: ");
+        fgets(alunos[i].nome, sizeof(alunos[i].nome), stdin);
+
+        printf("Matricula: ");
+        scanf("%d", &alunos[i].matricula);
+        getchar(); // Remove o '\n' do teclado
+
+        printf("Curso: ");
+        fgets(alunos[i].curso, sizeof(alunos[i].curso), stdin);
+    }
+
+    // Chamada da função para imprimir os dados
+    imprimirAlunos(alunos, 5);
+
+    return 0;
+}

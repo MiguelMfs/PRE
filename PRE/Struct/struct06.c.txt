@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <math.h>
+
+// Estrutura para coordenadas polares
+typedef struct
+{
+    float raio;
+    float angulo;
+} Polar;
+
+// Estrutura para coordenadas cartesianas
+typedef struct
+{
+    float x;
+    float y;
+} Cartesiana;
+
+int main()
+{
+    Polar p;
+    Cartesiana c;
+
+    printf("Digite o raio: ");
+    scanf("%f", &p.raio);
+
+    printf("Digite o angulo (em radianos): ");
+    scanf("%f", &p.angulo);
+
+    // Conversão para coordenadas cartesianas
+    c.x = p.raio * cos(p.angulo);
+    c.y = p.raio * sin(p.angulo);
+
+    printf("\nCoordenadas Cartesianas:\n");
+    printf("x = %.2f\n", c.x);
+    printf("y = %.2f\n", c.y);
+
+    return 0;
+}

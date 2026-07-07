@@ -1,0 +1,81 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int *vetor;
+    int *novoVetor;
+    int tamanho = 10;
+    int quantidade = 0;
+    int valor;
+    int i;
+
+    // Aloca vetor inicial com 10 posições
+    vetor = (int *) malloc(tamanho * sizeof(int));
+
+    if(vetor == NULL)
+    {
+        printf("Erro ao alocar memoria.\n");
+        return 1;
+    }
+
+    printf("Digite numeros inteiros (0 encerra):\n");
+
+    while(1)
+    {
+        printf("Digite um valor: ");
+        scanf("%d", &valor);
+
+        if(valor == 0)
+            break;
+
+        // Verifica se o vetor está cheio
+        if(quantidade == tamanho)
+        {
+            // Cria um novo vetor com mais 10 posições
+            tamanho = tamanho + 10;
+
+            novoVetor = (int *) malloc(tamanho * sizeof(int));
+
+            if(novoVetor == NULL)
+            {
+                printf("Erro ao alocar memoria.\n");
+                free(vetor);
+                return 1;
+            }
+
+            // Copia os valores antigos para o novo vetor
+            for(i = 0; i < quantidade; i++)
+            {
+                novoVetor[i] = vetor[i];
+            }
+
+            // Libera a memória antiga
+            free(vetor);
+
+            // Atualiza o ponteiro
+            vetor = novoVetor;
+
+            printf("Vetor expandido para %d posicoes.\n", tamanho);
+        }
+
+        // Armazena o novo valor
+        vetor[quantidade] = valor;
+        quantidade++;
+    }
+
+    // Exibe o vetor final
+    printf("\nVetor lido:\n");
+
+    for(i = 0; i < quantidade; i++)
+    {
+        printf("%d ", vetor[i]);
+    }
+
+    printf("\n");
+
+    // Libera memória
+    free(vetor);
+
+    return 0;
+}

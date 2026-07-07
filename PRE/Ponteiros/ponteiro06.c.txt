@@ -1,0 +1,28 @@
+#include <stdio.h>
+
+// Função que calcula o dobro dos valores e armazena nas próprias variáveis
+void dobro(int *a, int *b)
+{
+    *a = *a * 2;
+    *b = *b * 2;
+}
+
+int main()
+{
+    int A, B;
+
+    printf("Digite o valor de A: ");
+    scanf("%d", &A);
+
+    printf("Digite o valor de B: ");
+    scanf("%d", &B);
+
+    dobro(&A, &B);
+
+    printf("\nValor de A dobrado: %d\n", A);
+    printf("Valor de B dobrado: %d\n", B);
+
+    printf("Soma dos valores dobrados: %d\n", A + B);
+
+    return 0;
+}

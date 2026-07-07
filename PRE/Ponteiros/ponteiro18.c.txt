@@ -1,0 +1,53 @@
+#include <stdio.h>
+
+int maiorValor(int *array, int n)
+{
+    int maior = *array;
+    int i;
+
+    for(i = 1; i < n; i++)
+    {
+        if(*(array + i) > maior)
+            maior = *(array + i);
+    }
+
+    return maior;
+}
+
+int main()
+{
+    int n, k;
+    int i;
+    int maior;
+    
+    printf("Digite o tamanho do array: ");
+    scanf("%d", &n);
+
+    int vetor[n];
+
+    printf("Digite os valores do array:\n");
+
+    for(i = 0; i < n; i++)
+    {
+        scanf("%d", &vetor[i]);
+    }
+
+    printf("Digite quantos elementos por linha deseja imprimir (k): ");
+    scanf("%d", &k);
+
+    printf("\nArray:\n");
+
+    for(i = 0; i < n; i++)
+    {
+        printf("%d ", vetor[i]);
+
+        if((i + 1) % k == 0)
+            printf("\n");
+    }
+
+    maior = maiorValor(vetor, n);
+
+    printf("\n\nMaior elemento do array: %d\n", maior);
+
+    return 0;
+}

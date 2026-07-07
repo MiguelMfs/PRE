@@ -1,0 +1,35 @@
+#include <stdio.h>
+
+// Função que troca os valores usando ponteiros
+void trocar(int *a, int *b)
+{
+    int aux;
+
+    aux = *a;
+    *a = *b;
+    *b = aux;
+}
+
+int main()
+{
+    int A, B;
+
+    printf("Digite o valor de A: ");
+    scanf("%d", &A);
+
+    printf("Digite o valor de B: ");
+    scanf("%d", &B);
+
+    printf("\nAntes da troca:\n");
+    printf("A = %d\n", A);
+    printf("B = %d\n", B);
+
+    // Chamada da função passando os endereços
+    trocar(&A, &B);
+
+    printf("\nDepois da troca:\n");
+    printf("A = %d\n", A);
+    printf("B = %d\n", B);
+
+    return 0;
+}

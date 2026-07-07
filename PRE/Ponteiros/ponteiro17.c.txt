@@ -1,0 +1,45 @@
+#include <stdio.h>
+
+int somarArrays(int *a, int *b, int *resultado, int tamanho1, int tamanho2)
+{
+    int i;
+
+    // Verifica se os tamanhos são diferentes
+    if(tamanho1 != tamanho2)
+    {
+        return 0;
+    }
+
+    // Soma os arrays
+    for(i = 0; i < tamanho1; i++)
+    {
+        *(resultado + i) = *(a + i) + *(b + i);
+    }
+
+    return 1;
+}
+
+int main()
+{
+    int array1[5] = {1, 2, 3, 4, 5};
+    int array2[5] = {10, 20, 30, 40, 50};
+    int resultado[5];
+
+    int i;
+
+    if(somarArrays(array1, array2, resultado, 5, 5))
+    {
+        printf("Array resultante:\n");
+
+        for(i = 0; i < 5; i++)
+        {
+            printf("%d\n", resultado[i]);
+        }
+    }
+    else
+    {
+        printf("Erro: arrays com tamanhos diferentes.\n");
+    }
+
+    return 0;
+}

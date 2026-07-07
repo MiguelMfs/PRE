@@ -1,0 +1,27 @@
+#include <stdio.h>
+
+int main()
+{
+    int vetor[5] = {10, 20, 30, 40, 50};
+    int *p;
+    int i;
+
+    // Associando o ponteiro ao array
+    p = vetor;
+
+    // Somando +1 em cada posição usando o ponteiro
+    for(i = 0; i < 5; i++)
+    {
+        *(p + i) = *(p + i) + 1;
+    }
+
+    // Exibindo o array após a alteração
+    printf("Array modificado:\n");
+
+    for(i = 0; i < 5; i++)
+    {
+        printf("%d\n", *(p + i));
+    }
+
+    return 0;
+}

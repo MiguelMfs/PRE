@@ -1,0 +1,28 @@
+#include <stdio.h>
+
+int main()
+{
+    int vetor[5];
+    int i;
+
+    // Leitura do array
+    for(i = 0; i < 5; i++)
+    {
+        printf("Digite o valor %d: ", i + 1);
+        scanf("%d", &vetor[i]);
+    }
+
+    // Imprime os endereços das posições com valores pares
+    printf("\nEnderecos das posicoes com valores pares:\n");
+
+    for(i = 0; i < 5; i++)
+    {
+        if(vetor[i] % 2 == 0)
+        {
+            printf("Valor %d na posicao %d - Endereco: %p\n",
+                   vetor[i], i, (void *)&vetor[i]);
+        }
+    }
+
+    return 0;
+}

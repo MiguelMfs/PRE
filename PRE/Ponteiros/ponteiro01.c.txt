@@ -1,0 +1,36 @@
+#include <stdio.h>
+
+int main()
+{
+    int inteiro = 10;
+    float real = 5.5;
+    char caractere = 'A';
+
+    int *pInt;
+    float *pReal;
+    char *pChar;
+
+    // Associação dos ponteiros
+    pInt = &inteiro;
+    pReal = &real;
+    pChar = &caractere;
+
+    // Valores antes da modificação
+    printf("Antes da modificacao:\n");
+    printf("Inteiro: %d\n", inteiro);
+    printf("Real: %.2f\n", real);
+    printf("Caractere: %c\n", caractere);
+
+    // Modificando os valores pelos ponteiros
+    *pInt = 20;
+    *pReal = 8.9;
+    *pChar = 'B';
+
+    // Valores após a modificação
+    printf("\nDepois da modificacao:\n");
+    printf("Inteiro: %d\n", inteiro);
+    printf("Real: %.2f\n", real);
+    printf("Caractere: %c\n", caractere);
+
+    return 0;
+}

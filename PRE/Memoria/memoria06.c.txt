@@ -1,0 +1,82 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int *memoria;
+    int tamanho;
+    int opcao, posicao, valor;
+    int i;
+
+    printf("Digite o tamanho da memoria (quantidade de inteiros): ");
+    scanf("%d", &tamanho);
+
+    // Alocacao dinamica da memoria
+    memoria = (int *) calloc(tamanho, sizeof(int));
+
+    if(memoria == NULL)
+    {
+        printf("Erro ao alocar memoria.\n");
+        return 1;
+    }
+
+    // Memoria inicia com todos os valores zerados
+    do
+    {
+        printf("\n===== MENU =====\n");
+        printf("1 - Inserir valor em uma posicao\n");
+        printf("2 - Consultar valor de uma posicao\n");
+        printf("0 - Sair\n");
+        printf("Escolha: ");
+        scanf("%d", &opcao);
+
+        switch(opcao)
+        {
+            case 1:
+                printf("Digite a posicao (0 a %d): ", tamanho - 1);
+                scanf("%d", &posicao);
+
+                if(posicao >= 0 && posicao < tamanho)
+                {
+                    printf("Digite o valor: ");
+                    scanf("%d", &valor);
+
+                    memoria[posicao] = valor;
+
+                    printf("Valor armazenado com sucesso.\n");
+                }
+                else
+                {
+                    printf("Posicao invalida.\n");
+                }
+                break;
+
+            case 2:
+                printf("Digite a posicao (0 a %d): ", tamanho - 1);
+                scanf("%d", &posicao);
+
+                if(posicao >= 0 && posicao < tamanho)
+                {
+                    printf("Valor na posicao %d: %d\n",
+                           posicao, memoria[posicao]);
+                }
+                else
+                {
+                    printf("Posicao invalida.\n");
+                }
+                break;
+
+            case 0:
+                printf("Encerrando programa.\n");
+                break;
+
+            default:
+                printf("Opcao invalida.\n");
+        }
+
+    } while(opcao != 0);
+
+    free(memoria);
+
+    return 0;
+}

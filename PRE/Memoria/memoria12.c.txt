@@ -1,0 +1,95 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct
+{
+    int codigo;
+    char nome[51];
+    int quantidade;
+    float preco;
+} Produto;
+
+// Função para encontrar produto com maior preço
+int maiorPreco(Produto *produtos, int n)
+{
+    int i, maior = 0;
+
+    for(i = 1; i < n; i++)
+    {
+        if(produtos[i].preco > produtos[maior].preco)
+            maior = i;
+    }
+
+    return maior;
+}
+
+// Função para encontrar produto com maior quantidade
+int maiorQuantidade(Produto *produtos, int n)
+{
+    int i, maior = 0;
+
+    for(i = 1; i < n; i++)
+    {
+        if(produtos[i].quantidade > produtos[maior].quantidade)
+            maior = i;
+    }
+
+    return maior;
+}
+
+int main()
+{
+    Produto *produtos;
+    int n;
+    int i;
+    int posPreco, posQuantidade;
+
+    printf("Digite a quantidade de produtos: ");
+    scanf("%d", &n);
+
+    // Alocação dinâmica
+    produtos = (Produto *) malloc(n * sizeof(Produto));
+
+    if(produtos == NULL)
+    {
+        printf("Erro ao alocar memoria.\n");
+        return 1;
+    }
+
+    // Cadastro dos produtos
+    for(i = 0; i < n; i++)
+    {
+        printf("\nProduto %d\n", i + 1);
+
+        printf("Codigo: ");
+        scanf("%d", &produtos[i].codigo);
+
+        printf("Nome: ");
+        scanf(" %[^\n]", produtos[i].nome);
+
+        printf("Quantidade em estoque: ");
+        scanf("%d", &produtos[i].quantidade);
+
+        printf("Preco de venda: ");
+        scanf("%f", &produtos[i].preco);
+    }
+
+    // Encontrando os produtos
+    posPreco = maiorPreco(produtos, n);
+    posQuantidade = maiorQuantidade(produtos, n);
+
+    printf("\n===== Produto com maior preco =====\n");
+    printf("Codigo: %d\n", produtos[posPreco].codigo);
+    printf("Nome: %s\n", produtos[posPreco].nome);
+    printf("Preco: %.2f\n", produtos[posPreco].preco);
+
+    printf("\n===== Produto com maior quantidade em estoque =====\n");
+    printf("Codigo: %d\n", produtos[posQuantidade].codigo);
+    printf("Nome: %s\n", produtos[posQuantidade].nome);
+    printf("Quantidade: %d\n", produtos[posQuantidade].quantidade);
+
+    // Libera memória
+    free(produtos);
+
+    return 0;
+}

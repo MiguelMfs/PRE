@@ -1,0 +1,71 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    float **matriz;
+    int linhas, colunas;
+    int i, j;
+
+    printf("Digite o numero de linhas da matriz: ");
+    scanf("%d", &linhas);
+
+    printf("Digite o numero de colunas da matriz: ");
+    scanf("%d", &colunas);
+
+    // Alocação dinâmica das linhas
+    matriz = (float **) malloc(linhas * sizeof(float *));
+
+    if(matriz == NULL)
+    {
+        printf("Erro ao alocar memoria.\n");
+        return 1;
+    }
+
+    // Alocação dinâmica das colunas
+    for(i = 0; i < linhas; i++)
+    {
+        matriz[i] = (float *) malloc(colunas * sizeof(float));
+
+        if(matriz[i] == NULL)
+        {
+            printf("Erro ao alocar memoria.\n");
+            return 1;
+        }
+    }
+
+    // Inicialização da matriz
+    printf("\nDigite os valores da matriz:\n");
+
+    for(i = 0; i < linhas; i++)
+    {
+        for(j = 0; j < colunas; j++)
+        {
+            printf("Matriz[%d][%d]: ", i, j);
+            scanf("%f", &matriz[i][j]);
+        }
+    }
+
+    // Impressão da matriz
+    printf("\nMatriz informada:\n");
+
+    for(i = 0; i < linhas; i++)
+    {
+        for(j = 0; j < colunas; j++)
+        {
+            printf("%.2f\t", matriz[i][j]);
+        }
+
+        printf("\n");
+    }
+
+    // Liberação da memória
+    for(i = 0; i < linhas; i++)
+    {
+        free(matriz[i]);
+    }
+
+    free(matriz);
+
+    return 0;
+}

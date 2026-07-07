@@ -1,0 +1,39 @@
+#include <stdio.h>
+
+void maiorElemento(int *vetor, int n)
+{
+    int maior = vetor[0];
+    int contador = 0;
+    int i;
+
+    // Encontra o maior elemento
+    for(i = 0; i < n; i++)
+    {
+        if(vetor[i] > maior)
+            maior = vetor[i];
+    }
+
+    // Conta quantas vezes o maior elemento aparece
+    for(i = 0; i < n; i++)
+    {
+        if(vetor[i] == maior)
+            contador++;
+    }
+
+    // Armazena as informações nas duas posições extras do vetor
+    vetor[n] = maior;
+    vetor[n + 1] = contador;
+}
+
+int main()
+{
+    int vetor[11] = {5, 2, 15, 3, 7, 15, 8, 6, 15};
+    int i;
+
+    maiorElemento(vetor, 9);
+
+    printf("Maior elemento: %d\n", vetor[9]);
+    printf("Quantidade de vezes que aparece: %d\n", vetor[10]);
+
+    return 0;
+}

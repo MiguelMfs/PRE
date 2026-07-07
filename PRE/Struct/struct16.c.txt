@@ -1,0 +1,84 @@
+#include <stdio.h>
+#include <string.h>
+
+typedef struct
+{
+    int codigo;
+    char nome[16];
+    float preco;
+    int quantidade;
+} Produto;
+
+// Função para ler os produtos
+void lerProdutos(Produto produtos[], int n)
+{
+    int i;
+
+    for(i = 0; i < n; i++)
+    {
+        printf("\nProduto %d\n", i + 1);
+
+        printf("Codigo: ");
+        scanf("%d", &produtos[i].codigo);
+
+        printf("Nome: ");
+        scanf("%s", produtos[i].nome);
+
+        printf("Preco: ");
+        scanf("%f", &produtos[i].preco);
+
+        printf("Quantidade: ");
+        scanf("%d", &produtos[i].quantidade);
+    }
+}
+
+// Função para processar o pedido
+void realizarPedido(Produto produtos[], int n, int codigo, int qtd)
+{
+    int i;
+
+    for(i = 0; i < n; i++)
+    {
+        if(produtos[i].codigo == codigo)
+        {
+            if(produtos[i].quantidade >= qtd)
+            {
+                produtos[i].quantidade -= qtd;
+                printf("Pedido realizado com sucesso!\n");
+                printf("Estoque restante: %d\n", produtos[i].quantidade);
+            }
+            else
+            {
+                printf("Erro: quantidade em estoque insuficiente.\n");
+            }
+            return;
+        }
+    }
+
+    printf("Erro: produto nao encontrado.\n");
+}
+
+int main()
+{
+    Produto produtos[5];
+    int codigo, quantidade;
+
+    lerProdutos(produtos, 5);
+
+    do
+    {
+        printf("\nDigite o codigo do produto (0 para sair): ");
+        scanf("%d", &codigo);
+
+        if(codigo != 0)
+        {
+            printf("Quantidade desejada: ");
+            scanf("%d", &quantidade);
+
+            realizarPedido(produtos, 5, codigo, quantidade);
+        }
+
+    } while(codigo != 0);
+
+    return 0;
+}

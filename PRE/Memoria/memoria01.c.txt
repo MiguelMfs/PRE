@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int *vetor;
+    int i;
+
+    // Alocação dinâmica de memória para 5 inteiros
+    vetor = (int *) malloc(5 * sizeof(int));
+
+    if(vetor == NULL)
+    {
+        printf("Erro ao alocar memoria.\n");
+        return 1;
+    }
+
+    // Leitura dos valores
+    printf("Digite 5 numeros inteiros:\n");
+
+    for(i = 0; i < 5; i++)
+    {
+        printf("Valor %d: ", i + 1);
+        scanf("%d", &vetor[i]);
+    }
+
+    // Exibição dos valores
+    printf("\nNumeros digitados:\n");
+
+    for(i = 0; i < 5; i++)
+    {
+        printf("%d\n", vetor[i]);
+    }
+
+    // Liberação da memória
+    free(vetor);
+
+    return 0;
+}

@@ -1,0 +1,81 @@
+#include <stdio.h>
+#include <string.h>
+
+typedef struct
+{
+    char nome[100];
+    char endereco[100];
+    char dataNascimento[11]; // dd/mm/aaaa
+    char cidade[50];
+    char cep[10];            // 99999-999
+    char email[100];
+} Pessoa;
+
+void verificarDados(Pessoa p)
+{
+    int erro = 0;
+
+    // Verifica data
+    if (strlen(p.dataNascimento) != 10 ||
+        p.dataNascimento[2] != '/' ||
+        p.dataNascimento[5] != '/')
+    {
+        printf("Data de nascimento invalida!\n");
+        erro = 1;
+    }
+
+    // Verifica CEP
+    if (strlen(p.cep) != 9 || p.cep[5] != '-')
+    {
+        printf("CEP invalido!\n");
+        erro = 1;
+    }
+
+    // Verifica e-mail
+    if (strchr(p.email, '@') == NULL || strchr(p.email, '.') == NULL)
+    {
+        printf("E-mail invalido!\n");
+        erro = 1;
+    }
+
+    if (!erro)
+    {
+        printf("\nTodos os dados estao corretos!\n");
+        printf("Nome: %s", p.nome);
+        printf("Endereco: %s", p.endereco);
+        printf("Data de Nascimento: %s\n", p.dataNascimento);
+        printf("Cidade: %s", p.cidade);
+        printf("CEP: %s\n", p.cep);
+        printf("Email: %s", p.email);
+    }
+}
+
+int main()
+{
+    Pessoa p;
+
+    printf("Nome: ");
+    fgets(p.nome, sizeof(p.nome), stdin);
+
+    printf("Endereco: ");
+    fgets(p.endereco, sizeof(p.endereco), stdin);
+
+    printf("Data de Nascimento (dd/mm/aaaa): ");
+    fgets(p.dataNascimento, sizeof(p.dataNascimento), stdin);
+    p.dataNascimento[strcspn(p.dataNascimento, "\n")] = '\0';
+
+    printf("Cidade: ");
+    fgets(p.cidade, sizeof(p.cidade), stdin);
+
+    printf("CEP (99999-999): ");
+    fgets(p.cep, sizeof(p.cep), stdin);
+    p.cep[strcspn(p.cep, "\n")] = '\0';
+
+    printf("Email: ");
+    fgets(p.email, sizeof(p.email), stdin);
+    p.email[strcspn(p.email, "\n")] = '\0';
+
+    verificarDados(p);
+
+    return 0;
+}

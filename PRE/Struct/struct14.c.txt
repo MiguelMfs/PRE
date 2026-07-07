@@ -1,0 +1,84 @@
+#include <stdio.h>
+
+typedef struct
+{
+    int dia;
+    int mes;
+    int ano;
+} Data;
+
+typedef struct
+{
+    char compromisso[61];
+    Data data;
+} Agenda;
+
+// Função para ler os compromissos
+void lerCompromissos(Agenda agenda[], int n)
+{
+    int i;
+
+    for(i = 0; i < n; i++)
+    {
+        printf("\nCompromisso %d\n", i + 1);
+
+        printf("Descricao: ");
+        getchar();
+        fgets(agenda[i].compromisso, sizeof(agenda[i].compromisso), stdin);
+
+        printf("Dia: ");
+        scanf("%d", &agenda[i].data.dia);
+
+        printf("Mes: ");
+        scanf("%d", &agenda[i].data.mes);
+
+        printf("Ano: ");
+        scanf("%d", &agenda[i].data.ano);
+    }
+}
+
+// Função para mostrar compromissos do mês e ano informados
+void mostrarCompromissos(Agenda agenda[], int n, int mes, int ano)
+{
+    int i;
+
+    printf("\nCompromissos de %02d/%d:\n", mes, ano);
+
+    for(i = 0; i < n; i++)
+    {
+        if(agenda[i].data.mes == mes && agenda[i].data.ano == ano)
+        {
+            printf("\nData: %02d/%02d/%04d\n",
+                   agenda[i].data.dia,
+                   agenda[i].data.mes,
+                   agenda[i].data.ano);
+
+            printf("Compromisso: %s", agenda[i].compromisso);
+        }
+    }
+}
+
+int main()
+{
+    Agenda agenda[5];
+    int mes, ano;
+
+    lerCompromissos(agenda, 5);
+
+    do
+    {
+        printf("\nDigite o mes (0 para sair): ");
+        scanf("%d", &mes);
+
+        if(mes != 0)
+        {
+            printf("Digite o ano: ");
+            scanf("%d", &ano);
+
+            mostrarCompromissos(agenda, 5, mes, ano);
+        }
+
+    } while(mes != 0);
+
+    return 0;
+}

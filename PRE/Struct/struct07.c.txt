@@ -1,0 +1,72 @@
+#include <stdio.h>
+
+// Estrutura para a data de nascimento
+typedef struct
+{
+    int dia;
+    int mes;
+    int ano;
+} Data;
+
+// Estrutura para o funcionário
+typedef struct
+{
+    char nome[100];
+    int idade;
+    char sexo;
+    char cpf[15];
+    Data nascimento;
+    int codigoSetor;
+    char cargo[30];
+    float salario;
+} Funcionario;
+
+int main()
+{
+    Funcionario f;
+
+    printf("Nome: ");
+    fgets(f.nome, sizeof(f.nome), stdin);
+
+    printf("Idade: ");
+    scanf("%d", &f.idade);
+    getchar();
+
+    printf("Sexo (M/F): ");
+    scanf("%c", &f.sexo);
+    getchar();
+
+    printf("CPF: ");
+    fgets(f.cpf, sizeof(f.cpf), stdin);
+
+    printf("Data de Nascimento (dd mm aaaa): ");
+    scanf("%d %d %d", &f.nascimento.dia,
+                       &f.nascimento.mes,
+                       &f.nascimento.ano);
+    getchar();
+
+    printf("Codigo do Setor (0-99): ");
+    scanf("%d", &f.codigoSetor);
+    getchar();
+
+    printf("Cargo: ");
+    fgets(f.cargo, sizeof(f.cargo), stdin);
+
+    printf("Salario: ");
+    scanf("%f", &f.salario);
+
+    printf("\n===== DADOS DO FUNCIONARIO =====\n");
+    printf("Nome: %s", f.nome);
+    printf("Idade: %d\n", f.idade);
+    printf("Sexo: %c\n", f.sexo);
+    printf("CPF: %s", f.cpf);
+    printf("Data de Nascimento: %02d/%02d/%04d\n",
+           f.nascimento.dia,
+           f.nascimento.mes,
+           f.nascimento.ano);
+    printf("Codigo do Setor: %d\n", f.codigoSetor);
+    printf("Cargo: %s", f.cargo);
+    printf("Salario: R$ %.2f\n", f.salario);
+
+    return 0;
+}

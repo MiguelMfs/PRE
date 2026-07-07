@@ -1,0 +1,84 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct
+{
+    char nome[31];
+    int codigo;
+    float preco;
+} Produto;
+
+int main()
+{
+    char *vetorBytes;
+    int **matriz;
+    Produto *produtos;
+    char **texto;
+
+    int i, j;
+
+    // (a) Vetor de 1024 Bytes
+    vetorBytes = (char *) malloc(1024 * sizeof(char));
+
+    if(vetorBytes == NULL)
+    {
+        printf("Erro ao alocar vetor de bytes.\n");
+        return 1;
+    }
+
+
+    // (b) Matriz de inteiros 10x10
+    matriz = (int **) malloc(10 * sizeof(int *));
+
+    for(i = 0; i < 10; i++)
+    {
+        matriz[i] = (int *) malloc(10 * sizeof(int));
+    }
+
+
+    // (c) Vetor para 50 registros de produtos
+    produtos = (Produto *) malloc(50 * sizeof(Produto));
+
+    if(produtos == NULL)
+    {
+        printf("Erro ao alocar produtos.\n");
+        return 1;
+    }
+
+
+    // (d) Texto de até 100 linhas com 80 caracteres
+    texto = (char **) malloc(100 * sizeof(char *));
+
+    for(i = 0; i < 100; i++)
+    {
+        texto[i] = (char *) malloc(81 * sizeof(char));
+    }
+
+
+    printf("Todos os blocos de memoria foram alocados com sucesso.\n");
+
+
+    // Liberação da memória da matriz
+    for(i = 0; i < 10; i++)
+    {
+        free(matriz[i]);
+    }
+
+    free(matriz);
+
+    // Liberação do vetor de bytes
+    free(vetorBytes);
+
+    // Liberação do vetor de produtos
+    free(produtos);
+
+    // Liberação do texto
+    for(i = 0; i < 100; i++)
+    {
+        free(texto[i]);
+    }
+
+    free(texto);
+
+    return 0;
+}

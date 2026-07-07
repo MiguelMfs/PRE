@@ -1,0 +1,62 @@
+#include <stdio.h>
+
+typedef struct
+{
+    char nome[16];
+    float potencia;   // kW
+    float horasDia;   // horas por dia
+} Eletrodomestico;
+
+// Função para calcular e mostrar os consumos
+void calcularConsumo(Eletrodomestico eletros[], int n, int dias)
+{
+    float consumo[5];
+    float total = 0;
+    int i;
+
+    // Calcula o consumo de cada eletrodoméstico
+    for(i = 0; i < n; i++)
+    {
+        consumo[i] = eletros[i].potencia * eletros[i].horasDia * dias;
+        total += consumo[i];
+    }
+
+    printf("\nConsumo Total: %.2f kWh\n\n", total);
+
+    printf("Consumo de cada eletrodomestico:\n");
+
+    for(i = 0; i < n; i++)
+    {
+        printf("%s\n", eletros[i].nome);
+        printf("Consumo: %.2f kWh\n", consumo[i]);
+        printf("Percentual: %.2f%%\n\n", (consumo[i] / total) * 100);
+    }
+}
+
+int main()
+{
+    Eletrodomestico eletros[5];
+    int i, dias;
+
+    // Leitura dos dados
+    for(i = 0; i < 5; i++)
+    {
+        printf("\nEletrodomestico %d\n", i + 1);
+
+        printf("Nome: ");
+        scanf("%s", eletros[i].nome);
+
+        printf("Potencia (kW): ");
+        scanf("%f", &eletros[i].potencia);
+
+        printf("Tempo ativo por dia (horas): ");
+        scanf("%f", &eletros[i].horasDia);
+    }
+
+    printf("\nDigite o numero de dias: ");
+    scanf("%d", &dias);
+
+    calcularConsumo(eletros, 5, dias);
+
+    return 0;
+}

@@ -1,0 +1,238 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 100
+
+typedef struct {
+    char rua[50];
+    int numero;
+    char complemento[30];
+    char bairro[30];
+    char cep[10];
+    char cidade[30];
+    char estado[3];
+    char pais[30];
+} Endereco;
+
+typedef struct {
+    int ddd;
+    char numero[15];
+} Telefone;
+
+typedef struct {
+    int dia, mes, ano;
+} Data;
+
+typedef struct {
+    char nome[50];
+    char email[50];
+    Endereco endereco;
+    Telefone telefone;
+    Data aniversario;
+    char observacao[100];
+} Pessoa;
+
+Pessoa agenda[MAX];
+int qtd = 0;
+
+// Inserir pessoa em ordem alfabética
+void inserirPessoa()
+{
+    Pessoa p;
+    int i, pos;
+
+    printf("Nome: ");
+    getchar();
+    fgets(p.nome,50,stdin);
+    p.nome[strcspn(p.nome,"\n")] = '\0';
+
+    printf("Email: ");
+    fgets(p.email,50,stdin);
+    p.email[strcspn(p.email,"\n")] = '\0';
+
+    printf("Rua: ");
+    fgets(p.endereco.rua,50,stdin);
+    p.endereco.rua[strcspn(p.endereco.rua,"\n")] = '\0';
+
+    printf("Numero: ");
+    scanf("%d",&p.endereco.numero);
+    getchar();
+
+    printf("Complemento: ");
+    fgets(p.endereco.complemento,30,stdin);
+    p.endereco.complemento[strcspn(p.endereco.complemento,"\n")] = '\0';
+
+    printf("Bairro: ");
+    fgets(p.endereco.bairro,30,stdin);
+    p.endereco.bairro[strcspn(p.endereco.bairro,"\n")] = '\0';
+
+    printf("CEP: ");
+    fgets(p.endereco.cep,10,stdin);
+    p.endereco.cep[strcspn(p.endereco.cep,"\n")] = '\0';
+
+    printf("Cidade: ");
+    fgets(p.endereco.cidade,30,stdin);
+    p.endereco.cidade[strcspn(p.endereco.cidade,"\n")] = '\0';
+
+    printf("Estado: ");
+    fgets(p.endereco.estado,3,stdin);
+    p.endereco.estado[strcspn(p.endereco.estado,"\n")] = '\0';
+
+    getchar();
+
+    printf("Pais: ");
+    fgets(p.endereco.pais,30,stdin);
+    p.endereco.pais[strcspn(p.endereco.pais,"\n")] = '\0';
+
+    printf("DDD: ");
+    scanf("%d",&p.telefone.ddd);
+
+    printf("Telefone: ");
+    scanf("%s",p.telefone.numero);
+
+    printf("Data de aniversario (dd mm aaaa): ");
+    scanf("%d%d%d",&p.aniversario.dia,&p.aniversario.mes,&p.aniversario.ano);
+    getchar();
+
+    printf("Observacao: ");
+    fgets(p.observacao,100,stdin);
+    p.observacao[strcspn(p.observacao,"\n")] = '\0';
+
+    pos = qtd;
+    while(pos>0 && strcmp(p.nome,agenda[pos-1].nome)<0)
+    {
+        agenda[pos]=agenda[pos-1];
+        pos--;
+    }
+
+    agenda[pos]=p;
+    qtd++;
+}
+
+// Buscar por nome
+void buscarNome()
+{
+    char nome[50];
+    int i;
+
+    printf("Nome: ");
+    getchar();
+    fgets(nome,50,stdin);
+    nome[strcspn(nome,"\n")] = '\0';
+
+    for(i=0;i<qtd;i++)
+        if(strcmp(nome,agenda[i].nome)==0)
+            printf("%s - (%d)%s - %s\n",agenda[i].nome,agenda[i].telefone.ddd,
+                   agenda[i].telefone.numero,agenda[i].email);
+}
+
+// Buscar por mês
+void buscarMes()
+{
+    int mes,i;
+
+    printf("Mes: ");
+    scanf("%d",&mes);
+
+    for(i=0;i<qtd;i++)
+        if(agenda[i].aniversario.mes==mes)
+            printf("%s\n",agenda[i].nome);
+}
+
+// Buscar por dia e mês
+void buscarDiaMes()
+{
+    int dia,mes,i;
+
+    printf("Dia e Mes: ");
+    scanf("%d%d",&dia,&mes);
+
+    for(i=0;i<qtd;i++)
+        if(agenda[i].aniversario.dia==dia &&
+           agenda[i].aniversario.mes==mes)
+            printf("%s\n",agenda[i].nome);
+}
+
+// Remover pessoa
+void removerPessoa()
+{
+    char nome[50];
+    int i,j;
+
+    printf("Nome: ");
+    getchar();
+    fgets(nome,50,stdin);
+    nome[strcspn(nome,"\n")] = '\0';
+
+    for(i=0;i<qtd;i++)
+    {
+        if(strcmp(nome,agenda[i].nome)==0)
+        {
+            for(j=i;j<qtd-1;j++)
+                agenda[j]=agenda[j+1];
+            qtd--;
+            i--;
+        }
+    }
+}
+
+// Imprimir agenda
+void imprimir(int tipo)
+{
+    int i;
+
+    for(i=0;i<qtd;i++)
+    {
+        if(tipo==1)
+        {
+            printf("%s - (%d)%s - %s\n",
+                   agenda[i].nome,
+                   agenda[i].telefone.ddd,
+                   agenda[i].telefone.numero,
+                   agenda[i].email);
+        }
+        else
+        {
+            printf("\nNome: %s\n",agenda[i].nome);
+            printf("Email: %s\n",agenda[i].email);
+            printf("Endereco: %s, %d\n",
+                   agenda[i].endereco.rua,
+                   agenda[i].endereco.numero);
+            printf("Telefone: (%d)%s\n",
+                   agenda[i].telefone.ddd,
+                   agenda[i].telefone.numero);
+            printf("Aniversario: %02d/%02d/%04d\n",
+                   agenda[i].aniversario.dia,
+                   agenda[i].aniversario.mes,
+                   agenda[i].aniversario.ano);
+            printf("Observacao: %s\n",agenda[i].observacao);
+        }
+    }
+}
+
+int main()
+{
+    int op;
+
+    do
+    {
+        printf("\n1-Inserir\n2-Buscar Nome\n3-Buscar Mes\n");
+        printf("4-Buscar Dia/Mes\n5-Remover\n");
+        printf("6-Imprimir Resumido\n7-Imprimir Completo\n0-Sair\n");
+        scanf("%d",&op);
+
+        switch(op)
+        {
+            case 1: inserirPessoa(); break;
+            case 2: buscarNome(); break;
+            case 3: buscarMes(); break;
+            case 4: buscarDiaMes(); break;
+            case 5: removerPessoa(); break;
+            case 6: imprimir(1); break;
+            case 7: imprimir(2); break;
+        }
+
+    }while(op!=0);
+
+    return 0;
+}

@@ -1,0 +1,102 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_RECEITAS 5
+#define MAX_INGREDIENTES 10
+
+typedef struct
+{
+    char nome[30];
+    char quantidade[20];
+} Ingrediente;
+
+typedef struct
+{
+    char nome[26];
+    int qtdIngredientes;
+    Ingrediente ingredientes[MAX_INGREDIENTES];
+} Receita;
+
+// Função para ler as receitas
+void lerReceitas(Receita receitas[])
+{
+    int i, j;
+
+    for(i = 0; i < MAX_RECEITAS; i++)
+    {
+        printf("\nReceita %d\n", i + 1);
+
+        printf("Nome: ");
+        fgets(receitas[i].nome, sizeof(receitas[i].nome), stdin);
+        receitas[i].nome[strcspn(receitas[i].nome, "\n")] = '\0';
+
+        printf("Quantidade de ingredientes: ");
+        scanf("%d", &receitas[i].qtdIngredientes);
+        getchar();
+
+        for(j = 0; j < receitas[i].qtdIngredientes; j++)
+        {
+            printf("Ingrediente %d: ", j + 1);
+            fgets(receitas[i].ingredientes[j].nome,
+                  sizeof(receitas[i].ingredientes[j].nome), stdin);
+            receitas[i].ingredientes[j].nome[strcspn(
+                receitas[i].ingredientes[j].nome, "\n")] = '\0';
+
+            printf("Quantidade: ");
+            fgets(receitas[i].ingredientes[j].quantidade,
+                  sizeof(receitas[i].ingredientes[j].quantidade), stdin);
+            receitas[i].ingredientes[j].quantidade[strcspn(
+                receitas[i].ingredientes[j].quantidade, "\n")] = '\0';
+        }
+    }
+}
+
+// Função para buscar uma receita
+void buscarReceita(Receita receitas[])
+{
+    char busca[26];
+    int i, j, encontrou;
+
+    while(1)
+    {
+        printf("\nDigite o nome da receita (ENTER para sair): ");
+        fgets(busca, sizeof(busca), stdin);
+        busca[strcspn(busca, "\n")] = '\0';
+
+        if(strlen(busca) == 0)
+            break;
+
+        encontrou = 0;
+
+        for(i = 0; i < MAX_RECEITAS; i++)
+        {
+            if(strcmp(receitas[i].nome, busca) == 0)
+            {
+                encontrou = 1;
+
+                printf("\nReceita: %s\n", receitas[i].nome);
+                printf("Ingredientes:\n");
+
+                for(j = 0; j < receitas[i].qtdIngredientes; j++)
+                {
+                    printf("- %s : %s\n",
+                           receitas[i].ingredientes[j].nome,
+                           receitas[i].ingredientes[j].quantidade);
+                }
+            }
+        }
+
+        if(!encontrou)
+            printf("Receita nao encontrada.\n");
+    }
+}
+
+int main()
+{
+    Receita receitas[MAX_RECEITAS];
+
+    lerReceitas(receitas);
+    buscarReceita(receitas);
+
+    return 0;
+}

@@ -1,0 +1,38 @@
+#include <stdio.h>
+
+// Definição da estrutura
+typedef struct
+{
+    char nome[100];
+    int idade;
+    char endereco[200];
+} Pessoa;
+
+// Função para imprimir os dados
+void imprimirPessoa(Pessoa p)
+{
+    printf("\n--- Dados da Pessoa ---\n");
+    printf("Nome: %s", p.nome);
+    printf("Idade: %d\n", p.idade);
+    printf("Endereco: %s", p.endereco);
+}
+
+int main()
+{
+    Pessoa pessoa;
+
+    printf("Digite o nome: ");
+    fgets(pessoa.nome, sizeof(pessoa.nome), stdin);
+
+    printf("Digite a idade: ");
+    scanf("%d", &pessoa.idade);
+    getchar(); // Remove o '\n' deixado pelo scanf
+
+    printf("Digite o endereco: ");
+    fgets(pessoa.endereco, sizeof(pessoa.endereco), stdin);
+
+    // Chamada da função
+    imprimirPessoa(pessoa);
+
+    return 0;
+}

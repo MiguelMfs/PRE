@@ -1,0 +1,64 @@
+#include <stdio.h>
+
+// Função que ordena os valores e retorna 1 se forem todos iguais
+int ordenar(int *a, int *b, int *c)
+{
+    int aux;
+
+    // Ordenação crescente
+    if (*a > *b)
+    {
+        aux = *a;
+        *a = *b;
+        *b = aux;
+    }
+
+    if (*a > *c)
+    {
+        aux = *a;
+        *a = *c;
+        *c = aux;
+    }
+
+    if (*b > *c)
+    {
+        aux = *b;
+        *b = *c;
+        *c = aux;
+    }
+
+    // Verifica se os três valores são iguais
+    if (*a == *b && *b == *c)
+        return 1;
+    else
+        return 0;
+}
+
+int main()
+{
+    int a, b, c;
+    int resultado;
+
+    printf("Digite o primeiro valor: ");
+    scanf("%d", &a);
+
+    printf("Digite o segundo valor: ");
+    scanf("%d", &b);
+
+    printf("Digite o terceiro valor: ");
+    scanf("%d", &c);
+
+    resultado = ordenar(&a, &b, &c);
+
+    printf("\nValores ordenados:\n");
+    printf("Menor: %d\n", a);
+    printf("Medio: %d\n", b);
+    printf("Maior: %d\n", c);
+
+    if (resultado == 1)
+        printf("Os tres valores sao iguais.\n");
+    else
+        printf("Existem valores diferentes.\n");
+
+    return 0;
+}

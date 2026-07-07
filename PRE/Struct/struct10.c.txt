@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+typedef struct
+{
+    char valor[3];
+    char naipe[10];
+} Carta;
+
+int main()
+{
+    Carta baralho[52], jogador1[5], jogador2[5];
+    char valores[13][3] = {"A","2","3","4","5","6","7","8","9","10","J","Q","K"};
+    char naipes[4][10] = {"Copas","Ouros","Espadas","Paus"};
+
+    int i, j, k = 0;
+    Carta aux;
+
+    // Monta o baralho
+    for(i = 0; i < 4; i++)
+    {
+        for(j = 0; j < 13; j++)
+        {
+            sprintf(baralho[k].valor, "%s", valores[j]);
+            sprintf(baralho[k].naipe, "%s", naipes[i]);
+            k++;
+        }
+    }
+
+    // Embaralha o baralho
+    srand(time(NULL));
+
+    for(i = 0; i < 52; i++)
+    {
+        int r = rand() % 52;
+        aux = baralho[i];
+        baralho[i] = baralho[r];
+        baralho[r] = aux;
+    }
+
+    // Distribui 5 cartas para cada jogador
+    for(i = 0; i < 5; i++)
+    {
+        jogador1[i] = baralho[i];
+        jogador2[i] = baralho[i + 5];
+    }
+
+    // Exibe as cartas do Jogador 1
+    printf("Jogador 1:\n");
+    for(i = 0; i < 5; i++)
+    {
+        printf("%s de %s\n", jogador1[i].valor, jogador1[i].naipe);
+    }
+
+    // Exibe as cartas do Jogador 2
+    printf("\nJogador 2:\n");
+    for(i = 0; i < 5; i++)
+    {
+        printf("%s de %s\n", jogador2[i].valor, jogador2[i].naipe);
+    }
+
+    return 0;
+}

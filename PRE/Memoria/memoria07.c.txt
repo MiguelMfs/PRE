@@ -1,0 +1,99 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Função para exibir os números sorteados e acertados
+void mostrarNumeros(int *corretos, int tamanho, int *sorteio)
+{
+    int i;
+
+    printf("\nNumeros sorteados:\n");
+    for(i = 0; i < 6; i++)
+    {
+        printf("%d ", sorteio[i]);
+    }
+
+    printf("\n\nNumeros acertados:\n");
+
+    if(tamanho == 0)
+    {
+        printf("Nenhum numero acertado.\n");
+    }
+    else
+    {
+        for(i = 0; i < tamanho; i++)
+        {
+            printf("%d ", corretos[i]);
+        }
+    }
+
+    printf("\n");
+}
+
+int main()
+{
+    int sorteio[6];
+    int bilhete[6];
+    int *corretos;
+    int qtdAcertos = 0;
+    int i, j, k = 0;
+
+    // Leitura dos números sorteados
+    printf("Digite os 6 numeros sorteados:\n");
+
+    for(i = 0; i < 6; i++)
+    {
+        scanf("%d", &sorteio[i]);
+    }
+
+    // Leitura do bilhete
+    printf("Digite os 6 numeros do seu bilhete:\n");
+
+    for(i = 0; i < 6; i++)
+    {
+        scanf("%d", &bilhete[i]);
+    }
+
+    // Conta a quantidade de acertos
+    for(i = 0; i < 6; i++)
+    {
+        for(j = 0; j < 6; j++)
+        {
+            if(bilhete[i] == sorteio[j])
+            {
+                qtdAcertos++;
+                break;
+            }
+        }
+    }
+
+    printf("\nQuantidade de acertos: %d\n", qtdAcertos);
+
+    // Aloca vetor do tamanho dos acertos
+    corretos = (int *) malloc(qtdAcertos * sizeof(int));
+
+    if(qtdAcertos > 0 && corretos == NULL)
+    {
+        printf("Erro ao alocar memoria.\n");
+        return 1;
+    }
+
+    // Guarda os números corretos no novo vetor
+    for(i = 0; i < 6; i++)
+    {
+        for(j = 0; j < 6; j++)
+        {
+            if(bilhete[i] == sorteio[j])
+            {
+                corretos[k] = bilhete[i];
+                k++;
+                break;
+            }
+        }
+    }
+
+    mostrarNumeros(corretos, qtdAcertos, sorteio);
+
+    free(corretos);
+
+    return 0;
+}

@@ -1,0 +1,92 @@
+#include <stdio.h>
+
+typedef struct
+{
+    int matricula;
+    char nome[100];
+    float nota1, nota2, nota3;
+} Aluno;
+
+float media(Aluno a)
+{
+    return (a.nota1 + a.nota2 + a.nota3) / 3.0;
+}
+
+int main()
+{
+    Aluno alunos[5];
+    int i;
+    int maiorNota1 = 0;
+    int maiorMedia = 0;
+    int menorMedia = 0;
+
+    // Leitura dos dados
+    for (i = 0; i < 5; i++)
+    {
+        printf("\nAluno %d\n", i + 1);
+
+        printf("Matricula: ");
+        scanf("%d", &alunos[i].matricula);
+        getchar();
+
+        printf("Nome: ");
+        fgets(alunos[i].nome, sizeof(alunos[i].nome), stdin);
+
+        printf("Nota da Prova 1: ");
+        scanf("%f", &alunos[i].nota1);
+
+        printf("Nota da Prova 2: ");
+        scanf("%f", &alunos[i].nota2);
+
+        printf("Nota da Prova 3: ");
+        scanf("%f", &alunos[i].nota3);
+        getchar();
+    }
+
+    // Encontrar maior nota da prova 1
+    for (i = 1; i < 5; i++)
+    {
+        if (alunos[i].nota1 > alunos[maiorNota1].nota1)
+            maiorNota1 = i;
+    }
+
+    // Encontrar maior e menor média
+    for (i = 1; i < 5; i++)
+    {
+        if (media(alunos[i]) > media(alunos[maiorMedia]))
+            maiorMedia = i;
+
+        if (media(alunos[i]) < media(alunos[menorMedia]))
+            menorMedia = i;
+    }
+
+    // Resultados
+    printf("\n===== RESULTADOS =====\n");
+
+    printf("\nAluno com maior nota da Prova 1:\n");
+    printf("Nome: %s", alunos[maiorNota1].nome);
+    printf("Nota: %.2f\n", alunos[maiorNota1].nota1);
+
+    printf("\nAluno com maior media:\n");
+    printf("Nome: %s", alunos[maiorMedia].nome);
+    printf("Media: %.2f\n", media(alunos[maiorMedia]));
+
+    printf("\nAluno com menor media:\n");
+    printf("Nome: %s", alunos[menorMedia].nome);
+    printf("Media: %.2f\n", media(alunos[menorMedia]));
+
+    printf("\nSituacao dos alunos:\n");
+
+    for (i = 0; i < 5; i++)
+    {
+        printf("\nNome: %s", alunos[i].nome);
+        printf("Media: %.2f - ", media(alunos[i]));
+
+        if (media(alunos[i]) >= 6.0)
+            printf("APROVADO\n");
+        else
+            printf("REPROVADO\n");
+    }
+
+    return 0;
+}

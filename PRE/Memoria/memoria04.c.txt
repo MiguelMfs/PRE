@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Função para alocar dinamicamente a string
+char *alocarString(int tamanho)
+{
+    char *str;
+
+    str = (char *) malloc((tamanho + 1) * sizeof(char));
+
+    if(str == NULL)
+    {
+        printf("Erro ao alocar memoria.\n");
+        return NULL;
+    }
+
+    return str;
+}
+
+// Função para imprimir a string sem vogais
+void imprimirSemVogais(char *str)
+{
+    int i;
+
+    printf("\nString sem vogais:\n");
+
+    for(i = 0; str[i] != '\0'; i++)
+    {
+        if(str[i] != 'a' && str[i] != 'e' &&
+           str[i] != 'i' && str[i] != 'o' &&
+           str[i] != 'u' &&
+           str[i] != 'A' && str[i] != 'E' &&
+           str[i] != 'I' && str[i] != 'O' &&
+           str[i] != 'U')
+        {
+            printf("%c", str[i]);
+        }
+    }
+
+    printf("\n");
+}
+
+int main()
+{
+    char *string;
+    int tamanho;
+
+    printf("Digite o tamanho da string: ");
+    scanf("%d", &tamanho);
+
+    getchar();
+
+    string = alocarString(tamanho);
+
+    if(string == NULL)
+        return 1;
+
+    printf("Digite a string: ");
+    fgets(string, tamanho + 1, stdin);
+
+    imprimirSemVogais(string);
+
+    free(string);
+
+    return 0;
+}

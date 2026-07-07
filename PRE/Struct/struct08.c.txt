@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <string.h>
+
+typedef struct
+{
+    char nome[100];
+    char endereco[100];
+    char telefone[20];
+} Pessoa;
+
+int main()
+{
+    Pessoa pessoas[5], aux;
+    int i, j;
+
+    // Leitura dos dados
+    for (i = 0; i < 5; i++)
+    {
+        printf("\nPessoa %d\n", i + 1);
+
+        printf("Nome: ");
+        fgets(pessoas[i].nome, sizeof(pessoas[i].nome), stdin);
+
+        printf("Endereco: ");
+        fgets(pessoas[i].endereco, sizeof(pessoas[i].endereco), stdin);
+
+        printf("Telefone: ");
+        fgets(pessoas[i].telefone, sizeof(pessoas[i].telefone), stdin);
+    }
+
+    // Ordenação alfabética pelo nome
+    for (i = 0; i < 4; i++)
+    {
+        for (j = i + 1; j < 5; j++)
+        {
+            if (strcmp(pessoas[i].nome, pessoas[j].nome) > 0)
+            {
+                aux = pessoas[i];
+                pessoas[i] = pessoas[j];
+                pessoas[j] = aux;
+            }
+        }
+    }
+
+    // Impressão dos dados
+    printf("\n===== PESSOAS EM ORDEM ALFABETICA =====\n");
+
+    for (i = 0; i < 5; i++)
+    {
+        printf("\nPessoa %d\n", i + 1);
+        printf("Nome: %s", pessoas[i].nome);
+        printf("Endereco: %s", pessoas[i].endereco);
+        printf("Telefone: %s", pessoas[i].telefone);
+    }
+
+    return 0;
+}

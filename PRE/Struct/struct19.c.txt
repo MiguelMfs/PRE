@@ -1,0 +1,109 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_DIRETORES 5
+#define MAX_FILMES 10
+
+typedef struct
+{
+    char nome[30];
+    int ano;
+    int duracao;
+} Filme;
+
+typedef struct
+{
+    char nome[21];
+    int qtdFilmes;
+    Filme filmes[MAX_FILMES];
+} Diretor;
+
+// Função para ler os diretores e seus filmes
+void lerDiretores(Diretor diretores[])
+{
+    int i, j;
+
+    for(i = 0; i < MAX_DIRETORES; i++)
+    {
+        printf("\nDiretor %d\n", i + 1);
+
+        printf("Nome: ");
+        fgets(diretores[i].nome, sizeof(diretores[i].nome), stdin);
+        diretores[i].nome[strcspn(diretores[i].nome, "\n")] = '\0';
+
+        printf("Quantidade de filmes: ");
+        scanf("%d", &diretores[i].qtdFilmes);
+        getchar();
+
+        for(j = 0; j < diretores[i].qtdFilmes; j++)
+        {
+            printf("\nFilme %d\n", j + 1);
+
+            printf("Nome: ");
+            fgets(diretores[i].filmes[j].nome,
+                  sizeof(diretores[i].filmes[j].nome), stdin);
+            diretores[i].filmes[j].nome[strcspn(
+                diretores[i].filmes[j].nome, "\n")] = '\0';
+
+            printf("Ano: ");
+            scanf("%d", &diretores[i].filmes[j].ano);
+
+            printf("Duracao (min): ");
+            scanf("%d", &diretores[i].filmes[j].duracao);
+            getchar();
+        }
+    }
+}
+
+// Função para buscar diretor
+void buscarDiretor(Diretor diretores[])
+{
+    char busca[21];
+    int i, j, encontrou;
+
+    while(1)
+    {
+        printf("\nDigite o nome do diretor (ENTER para sair): ");
+        fgets(busca, sizeof(busca), stdin);
+        busca[strcspn(busca, "\n")] = '\0';
+
+        if(strlen(busca) == 0)
+            break;
+
+        encontrou = 0;
+
+        for(i = 0; i < MAX_DIRETORES; i++)
+        {
+            if(strcmp(diretores[i].nome, busca) == 0)
+            {
+                encontrou = 1;
+
+                printf("\nDiretor: %s\n", diretores[i].nome);
+                printf("Filmes:\n");
+
+                for(j = 0; j < diretores[i].qtdFilmes; j++)
+                {
+                    printf("\nNome: %s\n",
+                           diretores[i].filmes[j].nome);
+                    printf("Ano: %d\n",
+                           diretores[i].filmes[j].ano);
+                    printf("Duracao: %d minutos\n",
+                           diretores[i].filmes[j].duracao);
+                }
+            }
+        }
+
+        if(!encontrou)
+            printf("Diretor nao encontrado.\n");
+    }
+}
+
+int main()
+{
+    Diretor diretores[MAX_DIRETORES];
+
+    lerDiretores(diretores);
+    buscarDiretor(diretores);
+
+    return 0;
+}

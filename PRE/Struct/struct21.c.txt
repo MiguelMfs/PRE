@@ -1,0 +1,64 @@
+#include <stdio.h>
+
+struct dma
+{
+    int dia;
+    int mes;
+    int ano;
+};
+
+// Verifica se o ano é bissexto
+int bissexto(int ano)
+{
+    return (ano % 4 == 0 && ano % 100 != 0) || (ano % 400 == 0);
+}
+
+// Converte uma data para número de dias
+long diasTotais(struct dma data)
+{
+    int diasMes[] = {31,28,31,30,31,30,31,31,30,31,30,31};
+    long total = 0;
+    int i;
+
+    // Soma os dias dos anos anteriores
+    for(i = 1; i < data.ano; i++)
+    {
+        total += 365;
+        if(bissexto(i))
+            total++;
+    }
+
+    // Soma os dias dos meses anteriores
+    for(i = 0; i < data.mes - 1; i++)
+    {
+        total += diasMes[i];
+
+        if(i == 1 && bissexto(data.ano))
+            total++;
+    }
+
+    total += data.dia;
+
+    return total;
+}
+
+int main()
+{
+    struct dma data1, data2;
+    long diferenca;
+
+    printf("Digite a primeira data (dd mm aaaa): ");
+    scanf("%d %d %d", &data1.dia, &data1.mes, &data1.ano);
+
+    printf("Digite a segunda data (dd mm aaaa): ");
+    scanf("%d %d %d", &data2.dia, &data2.mes, &data2.ano);
+
+    diferenca = diasTotais(data2) - diasTotais(data1);
+
+    if(diferenca < 0)
+        diferenca = -diferenca;
+
+    printf("Numero de dias entre as datas: %ld\n", diferenca);
+
+    return 0;
+}

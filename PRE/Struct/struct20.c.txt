@@ -1,0 +1,162 @@
+#include <stdio.h>
+#include <string.h>
+
+#define TAM 5
+
+typedef struct
+{
+    char rua[50];
+    char bairro[30];
+    char cidade[30];
+    char estado[3];
+    char cep[10];
+} Endereco;
+
+typedef struct
+{
+    char nome[50];
+    Endereco endereco;
+    float salario;
+    int identidade;
+    char cpf[15];
+    char estadoCivil[20];
+    char telefone[20];
+    int idade;
+    char sexo;
+} Cadastro;
+
+// Leitura dos cadastros
+void lerCadastros(Cadastro c[])
+{
+    int i;
+
+    for(i = 0; i < TAM; i++)
+    {
+        printf("\nCadastro %d\n", i + 1);
+
+        printf("Nome: ");
+        fgets(c[i].nome, sizeof(c[i].nome), stdin);
+        c[i].nome[strcspn(c[i].nome, "\n")] = '\0';
+
+        printf("Rua: ");
+        fgets(c[i].endereco.rua, sizeof(c[i].endereco.rua), stdin);
+        c[i].endereco.rua[strcspn(c[i].endereco.rua, "\n")] = '\0';
+
+        printf("Bairro: ");
+        fgets(c[i].endereco.bairro, sizeof(c[i].endereco.bairro), stdin);
+        c[i].endereco.bairro[strcspn(c[i].endereco.bairro, "\n")] = '\0';
+
+        printf("Cidade: ");
+        fgets(c[i].endereco.cidade, sizeof(c[i].endereco.cidade), stdin);
+        c[i].endereco.cidade[strcspn(c[i].endereco.cidade, "\n")] = '\0';
+
+        printf("Estado: ");
+        scanf("%2s", c[i].endereco.estado);
+
+        printf("CEP: ");
+        scanf("%9s", c[i].endereco.cep);
+
+        printf("Salario: ");
+        scanf("%f", &c[i].salario);
+
+        printf("Identidade: ");
+        scanf("%d", &c[i].identidade);
+
+        printf("CPF: ");
+        scanf("%14s", c[i].cpf);
+
+        printf("Estado Civil: ");
+        scanf("%19s", c[i].estadoCivil);
+
+        printf("Telefone: ");
+        scanf("%19s", c[i].telefone);
+
+        printf("Idade: ");
+        scanf("%d", &c[i].idade);
+
+        printf("Sexo (M/F): ");
+        scanf(" %c", &c[i].sexo);
+        getchar();
+    }
+}
+
+// Pessoa com maior idade
+void maiorIdade(Cadastro c[])
+{
+    int i, maior = 0;
+
+    for(i = 1; i < TAM; i++)
+        if(c[i].idade > c[maior].idade)
+            maior = i;
+
+    printf("\nPessoa com maior idade: %s (%d anos)\n",
+           c[maior].nome, c[maior].idade);
+}
+
+// Pessoas do sexo masculino
+void listarMasculinos(Cadastro c[])
+{
+    int i;
+
+    printf("\nPessoas do sexo masculino:\n");
+
+    for(i = 0; i < TAM; i++)
+        if(c[i].sexo == 'M' || c[i].sexo == 'm')
+            printf("%s\n", c[i].nome);
+}
+
+// Pessoas com salário maior que 1000
+void listarSalario(Cadastro c[])
+{
+    int i;
+
+    printf("\nPessoas com salario maior que 1000:\n");
+
+    for(i = 0; i < TAM; i++)
+        if(c[i].salario > 1000)
+            printf("%s - R$ %.2f\n", c[i].nome, c[i].salario);
+}
+
+// Busca por identidade
+void buscarIdentidade(Cadastro c[])
+{
+    int i, id;
+
+    printf("\nDigite a identidade: ");
+    scanf("%d", &id);
+
+    for(i = 0; i < TAM; i++)
+    {
+        if(c[i].identidade == id)
+        {
+            printf("\nNome: %s\n", c[i].nome);
+            printf("Idade: %d\n", c[i].idade);
+            printf("Sexo: %c\n", c[i].sexo);
+            printf("CPF: %s\n", c[i].cpf);
+            printf("Telefone: %s\n", c[i].telefone);
+            printf("Salario: %.2f\n", c[i].salario);
+            printf("Endereco: %s, %s, %s - %s CEP: %s\n",
+                   c[i].endereco.rua,
+                   c[i].endereco.bairro,
+                   c[i].endereco.cidade,
+                   c[i].endereco.estado,
+                   c[i].endereco.cep);
+            return;
+        }
+    }
+
+    printf("Identidade nao encontrada.\n");
+}
+
+int main()
+{
+    Cadastro cadastro[TAM];
+
+    lerCadastros(cadastro);
+    maiorIdade(cadastro);
+    listarMasculinos(cadastro);
+    listarSalario(cadastro);
+    buscarIdentidade(cadastro);
+
+    return 0;
+}

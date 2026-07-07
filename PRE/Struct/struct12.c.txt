@@ -1,0 +1,72 @@
+#include <stdio.h>
+
+typedef struct
+{
+    char marca[16];
+    int ano;
+    float preco;
+} Carro;
+
+// Função para ler os dados de um carro
+Carro lerCarro()
+{
+    Carro c;
+
+    printf("Marca: ");
+    scanf("%s", c.marca);
+
+    printf("Ano: ");
+    scanf("%d", &c.ano);
+
+    printf("Preco: ");
+    scanf("%f", &c.preco);
+
+    return c;
+}
+
+// Função para mostrar os carros com preço menor que P
+void mostrarCarros(Carro carros[], int n, float p)
+{
+    int i;
+
+    printf("\nCarros com preco menor que %.2f:\n", p);
+
+    for(i = 0; i < n; i++)
+    {
+        if(carros[i].preco < p)
+        {
+            printf("\nMarca: %s\n", carros[i].marca);
+            printf("Ano: %d\n", carros[i].ano);
+            printf("Preco: %.2f\n", carros[i].preco);
+        }
+    }
+}
+
+int main()
+{
+    Carro carros[5];
+    float p;
+    int i;
+
+    // Leitura dos 5 carros
+    for(i = 0; i < 5; i++)
+    {
+        printf("\nCarro %d\n", i + 1);
+        carros[i] = lerCarro();
+    }
+
+    // Consulta dos carros por preço
+    do
+    {
+        printf("\nDigite um valor P (0 para sair): ");
+        scanf("%f", &p);
+
+        if(p != 0)
+        {
+            mostrarCarros(carros, 5, p);
+        }
+
+    } while(p != 0);
+
+    return 0;
+}

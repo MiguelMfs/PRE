@@ -1,0 +1,140 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Função para criar matriz dinamicamente
+int **criarMatriz(int linhas, int colunas)
+{
+    int **matriz;
+    int i;
+
+    matriz = (int **) malloc(linhas * sizeof(int *));
+
+    for(i = 0; i < linhas; i++)
+    {
+        matriz[i] = (int *) malloc(colunas * sizeof(int));
+    }
+
+    return matriz;
+}
+
+// Função para ler matriz
+void lerMatriz(int **matriz, int linhas, int colunas)
+{
+    int i, j;
+
+    for(i = 0; i < linhas; i++)
+    {
+        for(j = 0; j < colunas; j++)
+        {
+            printf("Matriz[%d][%d]: ", i, j);
+            scanf("%d", &matriz[i][j]);
+        }
+    }
+}
+
+// Função para imprimir matriz
+void imprimirMatriz(int **matriz, int linhas, int colunas)
+{
+    int i, j;
+
+    for(i = 0; i < linhas; i++)
+    {
+        for(j = 0; j < colunas; j++)
+        {
+            printf("%d\t", matriz[i][j]);
+        }
+
+        printf("\n");
+    }
+}
+
+// Função para multiplicar matrizes
+int **multiplicar(int **A, int **B, int a, int b, int c, int d)
+{
+    int **produto;
+    int i, j, k;
+
+    // A multiplicação só existe se b = c
+    if(b != c)
+        return NULL;
+
+    produto = criarMatriz(a, d);
+
+    for(i = 0; i < a; i++)
+    {
+        for(j = 0; j < d; j++)
+        {
+            produto[i][j] = 0;
+
+            for(k = 0; k < b; k++)
+            {
+                produto[i][j] += A[i][k] * B[k][j];
+            }
+        }
+    }
+
+    return produto;
+}
+
+int main()
+{
+    int **A, **B, **produto;
+    int a, b, c, d;
+    int i;
+
+    printf("Digite as dimensoes da primeira matriz (linhas colunas): ");
+    scanf("%d %d", &a, &b);
+
+    printf("Digite as dimensoes da segunda matriz (linhas colunas): ");
+    scanf("%d %d", &c, &d);
+
+
+    A = criarMatriz(a, b);
+    B = criarMatriz(c, d);
+
+
+    printf("\nDigite os valores da primeira matriz:\n");
+    lerMatriz(A, a, b);
+
+    printf("\nDigite os valores da segunda matriz:\n");
+    lerMatriz(B, c, d);
+
+
+    printf("\nPrimeira matriz:\n");
+    imprimirMatriz(A, a, b);
+
+    printf("\nSegunda matriz:\n");
+    imprimirMatriz(B, c, d);
+
+
+    produto = multiplicar(A, B, a, b, c, d);
+
+
+    if(produto != NULL)
+    {
+        printf("\nProduto das matrizes:\n");
+        imprimirMatriz(produto, a, d);
+
+        for(i = 0; i < a; i++)
+            free(produto[i]);
+
+        free(produto);
+    }
+    else
+    {
+        printf("\nNao e possivel multiplicar as matrizes.\n");
+    }
+
+
+    // Liberação das matrizes originais
+    for(i = 0; i < a; i++)
+        free(A[i]);
+
+    for(i = 0; i < c; i++)
+        free(B[i]);
+
+    free(A);
+    free(B);
+
+    return 0;
+}

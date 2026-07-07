@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+// Função que soma B em A e armazena o resultado em A
+void somar(int *a, int *b)
+{
+    *a = *a + *b;
+}
+
+int main()
+{
+    int A, B;
+
+    printf("Digite o valor de A: ");
+    scanf("%d", &A);
+
+    printf("Digite o valor de B: ");
+    scanf("%d", &B);
+
+    // Passa os endereços das variáveis
+    somar(&A, &B);
+
+    printf("\nValor de A: %d\n", A);
+    printf("Valor de B: %d\n", B);
+
+    return 0;
+}

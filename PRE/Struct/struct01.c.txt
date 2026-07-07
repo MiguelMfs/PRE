@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <string.h>
+
+// Tipo Horario
+typedef struct
+{
+    int hora;
+    int minuto;
+    int segundo;
+} Horario;
+
+// Tipo Data
+typedef struct
+{
+    int dia;
+    int mes;
+    int ano;
+} Data;
+
+// Tipo Compromisso
+typedef struct
+{
+    Data data;
+    Horario horario;
+    char texto[100];
+} Compromisso;
+
+int main()
+{
+    // Declaração e inicialização da variável
+    Compromisso compromisso = {
+        {6, 7, 2026},          // Data
+        {14, 30, 0},           // Horário
+        "Reuniao com a equipe" // Texto
+    };
+
+    // Exibindo os dados iniciais
+    printf("Compromisso Inicial:\n");
+    printf("Data: %02d/%02d/%04d\n",
+           compromisso.data.dia,
+           compromisso.data.mes,
+           compromisso.data.ano);
+
+    printf("Horario: %02d:%02d:%02d\n",
+           compromisso.horario.hora,
+           compromisso.horario.minuto,
+           compromisso.horario.segundo);
+
+    printf("Descricao: %s\n\n", compromisso.texto);
+
+    // Modificando o conteúdo da variável
+    compromisso.data.dia = 10;
+    compromisso.data.mes = 7;
+    compromisso.data.ano = 2026;
+
+    compromisso.horario.hora = 16;
+    compromisso.horario.minuto = 45;
+    compromisso.horario.segundo = 30;
+
+    strcpy(compromisso.texto, "Consulta medica");
+
+    // Exibindo os dados modificados
+    printf("Compromisso Alterado:\n");
+    printf("Data: %02d/%02d/%04d\n",
+           compromisso.data.dia,
+           compromisso.data.mes,
+           compromisso.data.ano);
+
+    printf("Horario: %02d:%02d:%02d\n",
+           compromisso.horario.hora,
+           compromisso.horario.minuto,
+           compromisso.horario.segundo);
+
+    printf("Descricao: %s\n", compromisso.texto);
+
+    return 0;
+}

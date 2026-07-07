@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int *vetor;
+    int i;
+    int contadorZero = 0;
+
+    // Alocação dinâmica usando calloc
+    vetor = (int *) calloc(1500, sizeof(int));
+
+    if(vetor == NULL)
+    {
+        printf("Erro ao alocar memoria.\n");
+        return 1;
+    }
+
+    // (a) Verifica se os 1500 valores foram inicializados com zero
+    for(i = 0; i < 1500; i++)
+    {
+        if(vetor[i] == 0)
+            contadorZero++;
+    }
+
+    printf("Quantidade de zeros encontrados: %d\n", contadorZero);
+
+    // (b) Atribui o valor do indice para cada posição
+    for(i = 0; i < 1500; i++)
+    {
+        vetor[i] = i;
+    }
+
+    // (c) Exibe os 10 primeiros elementos
+    printf("\n10 primeiros elementos:\n");
+
+    for(i = 0; i < 10; i++)
+    {
+        printf("%d ", vetor[i]);
+    }
+
+    // Exibe os 10 últimos elementos
+    printf("\n\n10 ultimos elementos:\n");
+
+    for(i = 1490; i < 1500; i++)
+    {
+        printf("%d ", vetor[i]);
+    }
+
+    printf("\n");
+
+    // Libera a memória
+    free(vetor);
+
+    return 0;
+}
