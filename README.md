@@ -73,10 +73,7 @@ Cada exercício possui seu próprio programa independente, contendo:
 - Processamento das informações;
 - Exibição dos resultados.
 
-## Autor
+## Aluno
 
-Aluno da disciplina de **Programação Estruturada**.
+Miguel Ferreira Santos.
 
-## Observação
-
-Os códigos foram desenvolvidos com finalidade acadêmica para prática dos conceitos apresentados durante a disciplina.
